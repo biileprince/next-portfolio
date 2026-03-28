@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
-// In production, MUST use a real secret in .env.local
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-dev-only-change-this';
 
 export async function middleware(request: NextRequest) {

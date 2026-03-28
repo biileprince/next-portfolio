@@ -1,8 +1,13 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { submitContactForm } from "./actions";
 import { FiSend } from "react-icons/fi";
+import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import type { ContactFormState } from "@/types";
 
 const initialState: ContactFormState = {
@@ -13,27 +18,25 @@ const initialState: ContactFormState = {
 export function ContactForm() {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
 
+  useEffect(() => {
+    if (state.message) {
+      if (state.success) {
+        toast.success(state.message);
+      } else {
+        toast.error(state.message);
+      }
+    }
+  }, [state]);
+
   return (
     <form action={formAction} className="glass rounded-xl p-8 space-y-6">
-      {state.message && (
-        <div
-          className={`p-4 rounded-lg text-sm ${
-            state.success
-              ? "bg-success/10 border border-success/20 text-success"
-              : "bg-error/10 border border-error/20 text-error"
-          }`}
-        >
-          {state.message}
-        </div>
-      )}
-
       <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label htmlFor="contact-name" className="text-sm text-surface-400">Full Name *</label>
-          <input
+          <Label htmlFor="contact-name" className="text-surface-400">Full Name *</Label>
+          <Input
             id="contact-name"
             name="name"
-            className="w-full px-4 py-3 bg-surface-700/50 border border-surface-600/50 rounded-lg text-surface-200 placeholder-surface-500 focus:outline-none focus:border-brand-400 transition-colors"
+            className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors"
             placeholder="John Doe"
             disabled={isPending}
             required
@@ -44,11 +47,11 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="contact-phone" className="text-sm text-surface-400">Phone Number *</label>
-          <input
+          <Label htmlFor="contact-phone" className="text-surface-400">Phone Number *</Label>
+          <Input
             id="contact-phone"
             name="phone"
-            className="w-full px-4 py-3 bg-surface-700/50 border border-surface-600/50 rounded-lg text-surface-200 placeholder-surface-500 focus:outline-none focus:border-brand-400 transition-colors"
+            className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors"
             placeholder="+233 555 902 675"
             disabled={isPending}
             required
@@ -60,12 +63,12 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="contact-email" className="text-sm text-surface-400">Email Address *</label>
-        <input
+        <Label htmlFor="contact-email" className="text-surface-400">Email Address *</Label>
+        <Input
           id="contact-email"
           name="email"
           type="email"
-          className="w-full px-4 py-3 bg-surface-700/50 border border-surface-600/50 rounded-lg text-surface-200 placeholder-surface-500 focus:outline-none focus:border-brand-400 transition-colors"
+          className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors"
           placeholder="you@example.com"
           disabled={isPending}
           required
@@ -76,11 +79,11 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="contact-subject" className="text-sm text-surface-400">Subject *</label>
-        <input
+        <Label htmlFor="contact-subject" className="text-surface-400">Subject *</Label>
+        <Input
           id="contact-subject"
           name="subject"
-          className="w-full px-4 py-3 bg-surface-700/50 border border-surface-600/50 rounded-lg text-surface-200 placeholder-surface-500 focus:outline-none focus:border-brand-400 transition-colors"
+          className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors"
           placeholder="Project Inquiry"
           disabled={isPending}
           required
@@ -91,12 +94,12 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="contact-message" className="text-sm text-surface-400">Message *</label>
-        <textarea
+        <Label htmlFor="contact-message" className="text-surface-400">Message *</Label>
+        <Textarea
           id="contact-message"
           name="message"
           rows={5}
-          className="w-full px-4 py-3 bg-surface-700/50 border border-surface-600/50 rounded-lg text-surface-200 placeholder-surface-500 focus:outline-none focus:border-brand-400 transition-colors resize-none"
+          className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors resize-none"
           placeholder="Let's discuss your project..."
           disabled={isPending}
           required
@@ -106,20 +109,20 @@ export function ContactForm() {
         )}
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={isPending}
-        className="w-full flex items-center justify-center gap-2.5 px-6 py-3 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
+        className="w-full h-12 bg-brand-500 hover:bg-brand-600 text-white font-medium shadow-lg shadow-brand-500/20"
       >
         {isPending ? (
           <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
         ) : (
-          <>
+          <div className="flex items-center gap-2.5">
             <FiSend className="text-lg" />
-            Send Message
-          </>
+            <span>Send Message</span>
+          </div>
         )}
-      </button>
+      </Button>
     </form>
   );
 }

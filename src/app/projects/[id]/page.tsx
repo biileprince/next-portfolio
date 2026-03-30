@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProjectById, getAllProjects } from "@/lib/queries/projects";
 import { BsGithub } from "react-icons/bs";
 import { FaGlobe, FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { FolderKanban } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import ProjectGallery from "./project-gallery";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +60,6 @@ export default async function ProjectDetailPage({
   const galleryImages = (project.galleryImages as string[]).filter(
     (image) => image && image.trim() !== "",
   );
-  const hasImage = project.imageUrl && project.imageUrl.trim() !== "";
 
   return (
     <section className="w-full py-20">
@@ -85,45 +83,12 @@ export default async function ProjectDetailPage({
           </p>
         </div>
 
-        {/* Image */}
-        <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-8 glass">
-          {hasImage ? (
-            <Image
-              src={project.imageUrl}
-              alt={project.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 800px"
-              priority
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-brand-500/10 via-surface-800 to-surface-900 flex items-center justify-center">
-              <FolderKanban size={64} className="text-surface-600" />
-            </div>
-          )}
-        </div>
-
-        {galleryImages.length > 0 && (
-          <div className="mb-10">
-            <h2 className="text-xl font-semibold mb-4">Project Gallery</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {galleryImages.map((image, index) => (
-                <div
-                  key={`${project.id}-gallery-${index}`}
-                  className="relative aspect-video rounded-lg overflow-hidden border border-surface-700 bg-surface-900"
-                >
-                  <Image
-                    src={image}
-                    alt={`${project.title} screenshot ${index + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <ProjectGallery
+          mainImageUrl={project.imageUrl}
+          images={galleryImages}
+          title={project.title}
+          projectId={project.id}
+        />
 
         {/* Links */}
         <div className="flex flex-wrap gap-3 mb-10">

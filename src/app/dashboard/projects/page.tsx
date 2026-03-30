@@ -33,6 +33,7 @@ export default async function ProjectsDashboard() {
     title: project.title,
     description: project.description,
     imageUrl: project.imageUrl,
+    galleryImages: toStringArray(project.galleryImages),
     tags: toStringArray(project.tags),
     techStack: toStringArray(project.techStack),
     features: toStringArray(project.features),

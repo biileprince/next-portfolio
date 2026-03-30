@@ -23,11 +23,31 @@ export const getProjectById = cache(async (id: number) => {
   return parseProject(rows[0]);
 });
 
+function toStringArray(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === "string");
+  }
+
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value) as unknown;
+      if (Array.isArray(parsed)) {
+        return parsed.filter((item): item is string => typeof item === "string");
+      }
+    } catch {
+      return [];
+    }
+  }
+
+  return [];
+}
+
 function parseProject(row: typeof projects.$inferSelect) {
   return {
     ...row,
-    tags: typeof row.tags === "string" ? JSON.parse(row.tags) : row.tags,
-    techStack: typeof row.techStack === "string" ? JSON.parse(row.techStack) : row.techStack,
-    features: typeof row.features === "string" ? JSON.parse(row.features) : row.features,
+    tags: toStringArray(row.tags),
+    techStack: toStringArray(row.techStack),
+    features: toStringArray(row.features),
+    galleryImages: toStringArray(row.galleryImages),
   };
 }

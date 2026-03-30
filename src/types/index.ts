@@ -25,6 +25,7 @@ export interface Project {
   title: string;
   description: string;
   imageUrl: string;
+  galleryImages: string[];
   tags: string[];
   techStack: string[];
   features: string[];

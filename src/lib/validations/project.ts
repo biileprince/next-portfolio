@@ -4,6 +4,7 @@ export const createProjectSchema = z.object({
   title: z.string().min(1, "Title is required").max(200),
   description: z.string().min(1, "Description is required").max(2000),
   imageUrl: z.string().optional().or(z.literal("")),
+  galleryImages: z.array(z.string()).default([]),
   tags: z.array(z.string()).default([]),
   techStack: z.array(z.string()).default([]),
   features: z.array(z.string()).default([]),

@@ -30,6 +30,19 @@ function parseStringToArray(val: string): string[] {
   return val.split(",").map((s) => s.trim()).filter(Boolean);
 }
 
+function parseJsonStringArray(val: string | null): string[] {
+  if (!val) return [];
+  try {
+    const parsed = JSON.parse(val) as unknown;
+    if (Array.isArray(parsed)) {
+      return parsed.filter((item): item is string => typeof item === "string");
+    }
+  } catch {
+    // Ignore malformed input and fallback to empty gallery
+  }
+  return [];
+}
+
 export async function saveProject(
   state: ProjectActionState,
   formData: FormData
@@ -42,6 +55,7 @@ export async function saveProject(
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       imageUrl: formData.get("imageUrl") as string,
+      galleryImages: parseJsonStringArray(formData.get("galleryImages") as string | null),
       tags: parseStringToArray(formData.get("tags") as string),
       techStack: parseStringToArray(formData.get("techStack") as string),
       features: parseStringToArray(formData.get("features") as string),

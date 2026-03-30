@@ -31,6 +31,7 @@ export const projects = sqliteTable("projects", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   imageUrl: text("image_url").notNull().default(""),
+  galleryImages: text("gallery_images", { mode: "json" }).notNull().default("[]"),
   tags: text("tags", { mode: "json" }).notNull().default("[]"),
   techStack: text("tech_stack", { mode: "json" }).notNull().default("[]"),
   features: text("features", { mode: "json" }).notNull().default("[]"),

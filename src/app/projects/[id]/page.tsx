@@ -9,6 +9,8 @@ import { FolderKanban } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
+export const dynamic = "force-dynamic";
+
 interface ProjectDetailPageProps {
   params: Promise<{ id: string }>;
 }
@@ -18,7 +20,9 @@ export async function generateStaticParams() {
   return projects.map((p) => ({ id: p.id.toString() }));
 }
 
-export async function generateMetadata({ params }: ProjectDetailPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ProjectDetailPageProps): Promise<Metadata> {
   const { id } = await params;
   const project = await getProjectById(parseInt(id, 10));
   if (!project) return { title: "Project Not Found" };
@@ -34,7 +38,9 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
   };
 }
 
-export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+export default async function ProjectDetailPage({
+  params,
+}: ProjectDetailPageProps) {
   const { id } = await params;
   const project = await getProjectById(parseInt(id, 10));
 
@@ -42,13 +48,19 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   // Get all projects for prev/next navigation
   const allProjects = await getAllProjects();
-  const currentIndex = allProjects.findIndex(p => p.id === project.id);
+  const currentIndex = allProjects.findIndex((p) => p.id === project.id);
   const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
-  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
+  const nextProject =
+    currentIndex < allProjects.length - 1
+      ? allProjects[currentIndex + 1]
+      : null;
 
   const tags = project.tags as string[];
   const techStack = project.techStack as string[];
   const features = project.features as string[];
+  const galleryImages = (project.galleryImages as string[]).filter(
+    (image) => image && image.trim() !== "",
+  );
   const hasImage = project.imageUrl && project.imageUrl.trim() !== "";
 
   return (
@@ -65,8 +77,12 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{project.title}</h1>
-          <p className="text-lg text-muted-foreground leading-relaxed">{project.description}</p>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+            {project.title}
+          </h1>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            {project.description}
+          </p>
         </div>
 
         {/* Image */}
@@ -86,6 +102,28 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </div>
           )}
         </div>
+
+        {galleryImages.length > 0 && (
+          <div className="mb-10">
+            <h2 className="text-xl font-semibold mb-4">Project Gallery</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {galleryImages.map((image, index) => (
+                <div
+                  key={`${project.id}-gallery-${index}`}
+                  className="relative aspect-video rounded-lg overflow-hidden border border-surface-700 bg-surface-900"
+                >
+                  <Image
+                    src={image}
+                    alt={`${project.title} screenshot ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Links */}
         <div className="flex flex-wrap gap-3 mb-10">
@@ -135,7 +173,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             <h2 className="text-xl font-semibold mb-4">Categories</h2>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
-                <Badge key={tag} variant="outline" className="glass px-3 py-1.5">
+                <Badge
+                  key={tag}
+                  variant="outline"
+                  className="glass px-3 py-1.5"
+                >
                   #{tag}
                 </Badge>
               ))}
@@ -149,11 +191,16 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             <h2 className="text-xl font-semibold mb-4">Key Features</h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {features.map((feature, idx) => (
-                <li key={idx} className="flex items-start gap-3 p-3 glass rounded-lg">
+                <li
+                  key={idx}
+                  className="flex items-start gap-3 p-3 glass rounded-lg"
+                >
                   <span className="w-6 h-6 rounded-full bg-brand-500/10 flex items-center justify-center text-xs text-brand-400 font-semibold shrink-0 mt-0.5">
                     {idx + 1}
                   </span>
-                  <span className="text-sm text-muted-foreground">{feature}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {feature}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -164,24 +211,38 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         <Separator className="my-10" />
         <div className="flex justify-between items-center">
           {prevProject ? (
-            <Link href={`/projects/${prevProject.id}`} className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href={`/projects/${prevProject.id}`}
+              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+            >
               <FaArrowLeft className="text-sm group-hover:-translate-x-1 transition-transform" />
               <div className="text-right">
-                <p className="text-xs text-muted-foreground uppercase tracking-wider">Previous</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                  Previous
+                </p>
                 <p className="text-sm font-medium">{prevProject.title}</p>
               </div>
             </Link>
-          ) : <div />}
+          ) : (
+            <div />
+          )}
 
           {nextProject ? (
-            <Link href={`/projects/${nextProject.id}`} className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors text-right">
+            <Link
+              href={`/projects/${nextProject.id}`}
+              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors text-right"
+            >
               <div>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider">Next</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                  Next
+                </p>
                 <p className="text-sm font-medium">{nextProject.title}</p>
               </div>
               <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform" />
             </Link>
-          ) : <div />}
+          ) : (
+            <div />
+          )}
         </div>
       </div>
     </section>

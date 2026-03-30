@@ -6,22 +6,36 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { getProfile } from "@/lib/queries/profile";
 import { getFeatures } from "@/lib/queries/features";
 import { getFeaturedProjects } from "@/lib/queries/projects";
-import { getEducation, getExperience, getAchievements } from "@/lib/queries/resume";
+import {
+  getEducation,
+  getExperience,
+  getAchievements,
+} from "@/lib/queries/resume";
 import { getSkillsByCategory } from "@/lib/queries/skills";
 import { getTestimonials } from "@/lib/queries/testimonials";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
-  const [profileData, features, projects, education, experience, achievements, skills, testimonials] =
-    await Promise.all([
-      getProfile(),
-      getFeatures(),
-      getFeaturedProjects(),
-      getEducation(),
-      getExperience(),
-      getAchievements(),
-      getSkillsByCategory(),
-      getTestimonials(),
-    ]);
+  const [
+    profileData,
+    features,
+    projects,
+    education,
+    experience,
+    achievements,
+    skills,
+    testimonials,
+  ] = await Promise.all([
+    getProfile(),
+    getFeatures(),
+    getFeaturedProjects(),
+    getEducation(),
+    getExperience(),
+    getAchievements(),
+    getSkillsByCategory(),
+    getTestimonials(),
+  ]);
 
   if (!profileData) {
     return (

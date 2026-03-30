@@ -53,6 +53,9 @@ export function ProjectDialog({
     initialState,
   );
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const [galleryImages, setGalleryImages] = useState<string[]>(() =>
+    getArray(project?.galleryImages),
+  );
 
   useEffect(() => {
     if (state.message) {
@@ -68,8 +71,37 @@ export function ProjectDialog({
   const isEdit = !!project;
   const imageUrl = uploadedImageUrl ?? project?.imageUrl ?? "";
 
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
+      setUploadedImageUrl(null);
+      setGalleryImages(getArray(project?.galleryImages));
+    }
+    onOpenChange(nextOpen);
+  };
+
+  const updateGalleryImage = (index: number, nextUrl: string) => {
+    if (!nextUrl.trim()) {
+      setGalleryImages((prev) => prev.filter((_, i) => i !== index));
+      return;
+    }
+
+    setGalleryImages((prev) =>
+      prev.map((url, i) => (i === index ? nextUrl : url)),
+    );
+  };
+
+  const addGallerySlot = () => {
+    setGalleryImages((prev) => [...prev, ""]);
+  };
+
+  const removeGalleryImage = (index: number) => {
+    setGalleryImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const galleryPayload = JSON.stringify(galleryImages.filter(Boolean));
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[640px] bg-surface-900 border-surface-700 text-surface-200 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-white">
@@ -85,6 +117,7 @@ export function ProjectDialog({
         <form action={formAction} className="space-y-6 mt-4">
           {isEdit && <input type="hidden" name="id" value={project.id} />}
           <input type="hidden" name="imageUrl" value={imageUrl} />
+          <input type="hidden" name="galleryImages" value={galleryPayload} />
 
           <div className="space-y-2">
             <Label htmlFor="title" className="text-surface-300">
@@ -125,6 +158,55 @@ export function ProjectDialog({
           <div className="space-y-2">
             <Label className="text-surface-300">Project Image</Label>
             <ImageUpload currentUrl={imageUrl} onUpload={setUploadedImageUrl} />
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <Label className="text-surface-300">Project Gallery</Label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={addGallerySlot}
+                className="border-surface-600 text-surface-300 hover:text-white"
+              >
+                Add Gallery Image
+              </Button>
+            </div>
+
+            {galleryImages.length === 0 ? (
+              <p className="text-xs text-surface-500 border border-surface-700 rounded-md px-3 py-2">
+                Add one or more gallery screenshots to show on the project details page.
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {galleryImages.map((url, index) => (
+                  <div
+                    key={`${url}-${index}`}
+                    className="space-y-2 border border-surface-700 rounded-lg p-3 bg-surface-800/40"
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs text-surface-400">
+                        Gallery image {index + 1}
+                      </p>
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => removeGalleryImage(index)}
+                        className="text-xs"
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                    <ImageUpload
+                      currentUrl={url}
+                      onUpload={(nextUrl) => updateGalleryImage(index, nextUrl)}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <Separator className="bg-surface-700/50" />

@@ -16,7 +16,10 @@ const initialState: ContactFormState = {
 };
 
 export function ContactForm() {
-  const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
+  const [state, formAction, isPending] = useActionState(
+    submitContactForm,
+    initialState,
+  );
 
   useEffect(() => {
     if (state.message) {
@@ -32,12 +35,14 @@ export function ContactForm() {
     <form action={formAction} className="glass rounded-xl p-8 space-y-6">
       <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="contact-name" className="text-surface-400">Full Name *</Label>
+          <Label htmlFor="contact-name" className="text-muted-foreground">
+            Full Name *
+          </Label>
           <Input
             id="contact-name"
             name="name"
-            className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors"
-            placeholder="John Doe"
+            className="w-full bg-muted border-border focus:border-brand-400 transition-colors"
+            placeholder="Your full name"
             disabled={isPending}
             required
           />
@@ -47,11 +52,13 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="contact-phone" className="text-surface-400">Phone Number *</Label>
+          <Label htmlFor="contact-phone" className="text-muted-foreground">
+            Phone Number *
+          </Label>
           <Input
             id="contact-phone"
             name="phone"
-            className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors"
+            className="w-full bg-muted border-border focus:border-brand-400 transition-colors"
             placeholder="+233 555 902 675"
             disabled={isPending}
             required
@@ -63,13 +70,15 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="contact-email" className="text-surface-400">Email Address *</Label>
+        <Label htmlFor="contact-email" className="text-muted-foreground">
+          Email Address *
+        </Label>
         <Input
           id="contact-email"
           name="email"
           type="email"
-          className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors"
-          placeholder="you@example.com"
+          className="w-full bg-muted border-border focus:border-brand-400 transition-colors"
+          placeholder="Enter your email address"
           disabled={isPending}
           required
         />
@@ -79,11 +88,13 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="contact-subject" className="text-surface-400">Subject *</Label>
+        <Label htmlFor="contact-subject" className="text-muted-foreground">
+          Subject *
+        </Label>
         <Input
           id="contact-subject"
           name="subject"
-          className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors"
+          className="w-full bg-muted border-border focus:border-brand-400 transition-colors"
           placeholder="Project Inquiry"
           disabled={isPending}
           required
@@ -94,12 +105,14 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="contact-message" className="text-surface-400">Message *</Label>
+        <Label htmlFor="contact-message" className="text-muted-foreground">
+          Message *
+        </Label>
         <Textarea
           id="contact-message"
           name="message"
           rows={5}
-          className="w-full bg-surface-700/50 border-surface-600/50 focus:border-brand-400 transition-colors resize-none"
+          className="w-full bg-muted border-border focus:border-brand-400 transition-colors resize-none"
           placeholder="Let's discuss your project..."
           disabled={isPending}
           required

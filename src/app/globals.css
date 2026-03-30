@@ -107,9 +107,10 @@ html {
 }
 
 body {
-  background-color: var(--color-surface-900);
-  color: var(--color-surface-200);
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-sans);
+  font-weight: 500;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -117,7 +118,7 @@ body {
 /* ─── Typography ────────────────────────────────────────────────────────── */
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--color-surface-50);
+  color: var(--foreground);
   font-weight: 700;
   line-height: 1.2;
 }
@@ -136,32 +137,32 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-surface-900);
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-600);
+  background: var(--border);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-surface-500);
+  background: var(--muted-foreground);
 }
 
 /* ─── Glass Morphism Utilities ──────────────────────────────────────────── */
 
 .glass {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+  border: 1px solid var(--border);
 }
 
 .glass-light {
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--muted);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.3);
+  border: 1px solid var(--border);
 }
 
 /* ─── Gradient Text ─────────────────────────────────────────────────────── */
@@ -205,7 +206,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── Noise Texture Overlay ─────────────────────────────────────────────── */
 
-.noise-bg::after {
+.dark .noise-bg::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -227,7 +228,7 @@ h1, h2, h3, h4, h5, h6 {
   --secondary: var(--color-surface-200);
   --secondary-foreground: var(--color-surface-900);
   --muted: var(--color-surface-200);
-  --muted-foreground: var(--color-surface-500);
+  --muted-foreground: var(--color-surface-600);
   --accent: var(--color-surface-200);
   --accent-foreground: var(--color-surface-900);
   --destructive: var(--color-error);

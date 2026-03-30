@@ -32,11 +32,11 @@ async function seed() {
     name: "Prince Yennuyar Biile",
     title: "BSc. IT Student & AWS Certified Cloud Practitioner",
     bio: "Dedicated BSc. Information Technology student (Final Year) and AWS Certified Cloud Practitioner with expertise in full-stack development, microservices, and cloud technologies. Hands-on experience building web applications using modern frameworks (React, Next.js, Node.js, NestJS) and strict TypeScript environments. Combines strong backend programming skills with demonstrated leadership abilities to build innovative, cloud-driven software solutions.",
-    email: "prince.biile@stu.ucc.edu.gh",
+    email: "biileprinceyennuyar5@gmail.com",
     phone: "0555902675",
     avatarUrl: "/images/princeimg.jpg",
     cvUrl: "/PrinceBiile_CV.pdf", // Assume this is uploaded/updated manually
-    heroImageUrl: "/images/biileprince.png",
+    heroImageUrl: "/images/biileprince.jpg",
     socialLinks: JSON.stringify([
       { platform: "GitHub", url: "https://github.com/biileprince", iconName: "FaGithub" },
       { platform: "LinkedIn", url: "https://www.linkedin.com/in/prince-biile-75343b244", iconName: "FaLinkedinIn" },
@@ -352,16 +352,144 @@ async function seed() {
     },
   ]);
 
-  // Expertise Content (keep generic placeholders or clear them for brevity, 
-  // I will just add one detail page as an example so the schema succeeds)
   await db.insert(expertiseContent).values([
     {
       slug: "web-development",
       title: "Full Stack Web Development",
       subtitle: "Modern frameworks and robust architectures",
       description: "I specialize in building complete solutions from interactive frontends to scalable backend services.",
-      items: JSON.stringify([]),
+      items: JSON.stringify([
+        {
+          title: "Frontend Engineering",
+          description: "Building responsive, accessible, and highly interactive user interfaces using modern React ecosystem.",
+          iconName: "FaReact",
+          technologies: [
+            { name: "Next.js", iconName: "SiNextdotjs" },
+            { name: "Tailwind CSS", iconName: "SiTailwindcss" },
+            { name: "TypeScript", iconName: "SiTypescript" }
+          ]
+        },
+        {
+          title: "Backend Architecture",
+          description: "Designing RESTful APIs and robust scalable microservices with clean code principles.",
+          iconName: "FaNodeJs",
+          technologies: [
+            { name: "Node.js", iconName: "SiNodedotjs" },
+            { name: "NestJS", iconName: "SiNestjs" },
+            { name: "Express", iconName: "SiExpress" }
+          ]
+        },
+        {
+          title: "Database Design",
+          description: "Structuring relational and NoSQL databases for optimal query performance and data integrity.",
+          iconName: "FaDatabase",
+          technologies: [
+            { name: "PostgreSQL", iconName: "SiPostgresql" },
+            { name: "MongoDB", iconName: "SiMongodb" },
+            { name: "Prisma", iconName: "SiPrisma" }
+          ]
+        },
+        {
+          title: "Real-time Applications",
+          description: "Implementing real-time bidirection communication for features like chat and live updates.",
+          iconName: "FaBolt",
+          technologies: [
+            { name: "Socket.IO", iconName: "SiSocketdotio" },
+            { name: "WebSockets", iconName: "FaNetworkWired" }
+          ]
+        }
+      ]),
       sortOrder: 1,
+    },
+    {
+      slug: "cloud-computing",
+      title: "Cloud Computing & DevOps",
+      subtitle: "Scalable Infrastructure and Automation",
+      description: "Deploying, scaling, and managing containerized applications across reliable cloud infrastructure.",
+      items: JSON.stringify([
+        {
+          title: "AWS Infrastructure",
+          description: "Architecting and managing scalable compute, storage, and networking resources on AWS.",
+          iconName: "FaAws",
+          technologies: [
+            { name: "EC2", iconName: "FaServer" },
+            { name: "S3", iconName: "FaHdd" },
+            { name: "Lambda", iconName: "FaCode" }
+          ]
+        },
+        {
+          title: "Containerization",
+          description: "Packaging applications and dependencies into isolated, reproducible containers.",
+          iconName: "FaDocker",
+          technologies: [
+            { name: "Docker", iconName: "SiDocker" },
+            { name: "Docker Compose", iconName: "SiDocker" }
+          ]
+        },
+        {
+          title: "Orchestration",
+          description: "Automating deployment, scaling, and management of containerized applications.",
+          iconName: "SiKubernetes",
+          technologies: [
+            { name: "Kubernetes", iconName: "SiKubernetes" },
+            { name: "Helm", iconName: "SiHelm" }
+          ]
+        },
+        {
+          title: "CI/CD Pipelines",
+          description: "Automating testing, integration, and deployment workflows for rapid iteration.",
+          iconName: "FaInfinity",
+          technologies: [
+            { name: "GitHub Actions", iconName: "SiGithubactions" },
+            { name: "Vercel", iconName: "SiVercel" }
+          ]
+        }
+      ]),
+      sortOrder: 2,
+    },
+    {
+      slug: "database-management",
+      title: "Database Architecture",
+      subtitle: "Robust data modeling operations",
+      description: "I specialize in deeply analyzing data constraints to create normalized efficient tables.",
+      items: JSON.stringify([
+        {
+          title: "Relational Modeling",
+          description: "Crafting optimized normalized schemas for SQL databases.",
+          iconName: "FaDatabase",
+          technologies: [
+            { name: "PostgreSQL", iconName: "SiPostgresql" },
+            { name: "MySQL", iconName: "SiMysql" }
+          ]
+        },
+        {
+          title: "NoSQL Paradigms",
+          description: "Implementing flexible document-based models for unstructured or rapidly changing schemas.",
+          iconName: "SiMongodb",
+          technologies: [
+            { name: "MongoDB", iconName: "SiMongodb" },
+            { name: "Mongoose", iconName: "SiMongoose" }
+          ]
+        },
+        {
+          title: "Modern ORMs",
+          description: "Utilizing modern Object-Relational Mappers for type-safe and secure database interactions.",
+          iconName: "FaCodeBranch",
+          technologies: [
+            { name: "Prisma", iconName: "SiPrisma" },
+            { name: "Drizzle", iconName: "FaCodeBranch" }
+          ]
+        },
+        {
+          title: "Data Caching",
+          description: "Accelerating application performance through strategically placed in-memory caches.",
+          iconName: "FaBolt",
+          technologies: [
+            { name: "Redis", iconName: "SiRedis" }
+          ]
+        }
+      ]),
+      sortOrder: 3,
     }
   ]);
 

@@ -7,12 +7,11 @@ import { useTypewriter, Cursor } from "react-simple-typewriter";
 import {
   FaFileDownload, FaPaperPlane, FaReact,
   FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub,
+  FaAws, FaDocker, FaNodeJs,
 } from "react-icons/fa";
 import {
-  SiNextdotjs, SiTailwindcss, SiJavascript, SiMongodb,
-  SiFigma, SiPhp, SiLaravel,
+  SiNextdotjs, SiTailwindcss, SiTypescript, SiNestjs,
 } from "react-icons/si";
-import { TiVendorMicrosoft } from "react-icons/ti";
 import {
   slideInLeft, slideInRight, float, hoverScaleButton, fadeUp,
 } from "@/lib/motion";
@@ -37,10 +36,18 @@ const socialIcons: Record<string, IconType> = {
   FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub,
 };
 
-const skillIcons: IconType[] = [
-  FaReact, SiNextdotjs, SiTailwindcss, SiJavascript,
-  SiMongodb, TiVendorMicrosoft, SiFigma, SiPhp, SiLaravel,
+const skillIcons: { icon: IconType; label: string }[] = [
+  { icon: FaReact, label: "React" },
+  { icon: SiNextdotjs, label: "Next.js" },
+  { icon: SiTypescript, label: "TypeScript" },
+  { icon: FaNodeJs, label: "Node.js" },
+  { icon: SiNestjs, label: "NestJS" },
+  { icon: FaAws, label: "AWS" },
+  { icon: FaDocker, label: "Docker" },
+  { icon: SiTailwindcss, label: "Tailwind" },
 ];
+
+
 
 export function Hero({ name, bio, cvUrl, heroImageUrl, socialLinks, typewriterWords }: HeroProps) {
   const [text] = useTypewriter({
@@ -52,42 +59,42 @@ export function Hero({ name, bio, cvUrl, heroImageUrl, socialLinks, typewriterWo
   });
 
   return (
-    <section id="home" className="w-full pt-24 pb-28 px-4 sm:px-8 lg:px-16 border-b border-surface-700/30">
+    <section id="home" className="w-full pt-24 pb-28 px-4 sm:px-8 lg:px-16 border-b border-border">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-14 lg:gap-10">
         {/* Left */}
         <motion.div
           variants={slideInLeft}
           initial="hidden"
           animate="visible"
-          className="w-full lg:w-1/2 flex flex-col gap-10"
+          className="w-full lg:w-1/2 flex flex-col gap-8"
         >
-          <div className="flex flex-col gap-6">
-            <p className="text-sm font-medium tracking-[0.25em] text-surface-400 uppercase">
+          <div className="flex flex-col gap-5">
+            <p className="text-sm font-semibold tracking-[0.25em] text-muted-foreground uppercase">
               Welcome to my digital realm
             </p>
 
-            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-bold text-white leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-[1.1]">
               Hi, I&apos;m{" "}
               <span className="gradient-text">{name}</span>
             </h1>
 
-            <h2 className="text-2xl sm:text-3xl xl:text-4xl font-semibold text-surface-300">
-              A <span className="text-white">{text}</span>
+            <h2 className="text-2xl sm:text-3xl xl:text-4xl font-bold text-muted-foreground">
+              <span className="text-foreground">{text}</span>
               <Cursor cursorStyle="|" cursorColor="#60a5fa" />
             </h2>
 
-            <p className="text-base text-surface-400 leading-relaxed max-w-xl">
+            <p className="text-base text-muted-foreground leading-relaxed max-w-xl">
               {bio}
             </p>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 pt-2">
             <motion.a
               href={cvUrl}
               download
               whileHover={hoverScaleButton}
-              className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/20 focus-ring"
+              className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-500 text-white rounded-lg font-semibold hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/20 focus-ring"
             >
               <FaFileDownload />
               Download CV
@@ -95,7 +102,7 @@ export function Hero({ name, bio, cvUrl, heroImageUrl, socialLinks, typewriterWo
             <motion.div whileHover={hoverScaleButton}>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2.5 px-6 py-3 border border-brand-400/50 text-brand-400 rounded-lg font-medium hover:border-brand-400 hover:bg-brand-500/5 transition-all focus-ring"
+                className="inline-flex items-center gap-2.5 px-6 py-3 border border-brand-400/50 text-brand-400 rounded-lg font-semibold hover:border-brand-400 hover:bg-brand-500/5 transition-all focus-ring"
               >
                 <FaPaperPlane />
                 Get in Touch
@@ -103,10 +110,12 @@ export function Hero({ name, bio, cvUrl, heroImageUrl, socialLinks, typewriterWo
             </motion.div>
           </div>
 
+
+
           {/* Social & Skills */}
-          <div className="flex flex-col xl:flex-row gap-8">
+          <div className="flex flex-col xl:flex-row gap-8 pt-4">
             <div>
-              <h3 className="text-xs uppercase tracking-wider text-surface-400 mb-3 font-medium">
+              <h3 className="text-xs uppercase tracking-wider text-muted-foreground mb-3 font-semibold">
                 Find me on
               </h3>
               <div className="flex gap-3">
@@ -119,7 +128,7 @@ export function Hero({ name, bio, cvUrl, heroImageUrl, socialLinks, typewriterWo
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.platform}
-                      className="p-3 rounded-full glass text-surface-300 hover:text-white hover:border-brand-500/30 hover:shadow-glow transition-all duration-200"
+                      className="p-3 rounded-full glass text-muted-foreground hover:text-foreground hover:border-brand-500/30 hover:shadow-glow transition-all duration-200"
                     >
                       <Icon />
                     </a>
@@ -128,14 +137,15 @@ export function Hero({ name, bio, cvUrl, heroImageUrl, socialLinks, typewriterWo
               </div>
             </div>
             <div>
-              <h3 className="text-xs uppercase tracking-wider text-surface-400 mb-3 font-medium">
+              <h3 className="text-xs uppercase tracking-wider text-muted-foreground mb-3 font-semibold">
                 Top Expertise
               </h3>
               <div className="flex flex-wrap gap-3">
-                {skillIcons.map((Icon, idx) => (
+                {skillIcons.map(({ icon: Icon, label }) => (
                   <span
-                    key={idx}
-                    className="p-3 rounded-full glass text-surface-300 hover:text-white hover:border-brand-500/30 transition-all duration-200 text-xl cursor-default"
+                    key={label}
+                    title={label}
+                    className="p-3 rounded-full glass text-muted-foreground hover:text-foreground hover:border-brand-500/30 transition-all duration-200 text-xl cursor-default"
                   >
                     <Icon />
                   </span>
@@ -153,6 +163,9 @@ export function Hero({ name, bio, cvUrl, heroImageUrl, socialLinks, typewriterWo
           className="w-full lg:w-1/2 flex justify-center items-center relative"
         >
           <div className="relative z-10">
+            {/* Animated gradient ring */}
+            <div className="absolute -inset-4 bg-gradient-to-tr from-brand-500/20 via-brand-400/10 to-transparent rounded-2xl blur-xl animate-pulse" />
+            
             <motion.div
               variants={float}
               animate="animate"
@@ -166,9 +179,9 @@ export function Hero({ name, bio, cvUrl, heroImageUrl, socialLinks, typewriterWo
                 priority
               />
             </motion.div>
-            <div className="absolute inset-0 bg-gradient-to-br from-surface-800/30 to-surface-900/30 backdrop-blur-[2px] rounded-2xl -z-10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-card/30 to-background/30 backdrop-blur-[2px] rounded-2xl -z-10" />
           </div>
-          <div className="absolute bottom-0 w-full h-3/4 bg-gradient-to-t from-surface-900 to-transparent rounded-2xl" />
+          <div className="absolute bottom-0 w-full h-3/4 bg-gradient-to-t from-background to-transparent rounded-2xl" />
         </motion.div>
       </div>
     </section>

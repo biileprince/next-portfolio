@@ -13,10 +13,10 @@ export function SkillBar({ name, level, delay = 0 }: SkillBarProps) {
   return (
     <div>
       <div className="flex justify-between text-sm mb-2">
-        <span className="text-surface-300">{name}</span>
-        <span className="text-surface-400">{level}%</span>
+        <span className="text-foreground">{name}</span>
+        <span className="text-muted-foreground">{level}%</span>
       </div>
-      <div className="h-2 rounded-full bg-surface-700/50 overflow-hidden">
+      <div className="h-2 rounded-full bg-muted overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${level}%` }}

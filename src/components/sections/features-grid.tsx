@@ -12,7 +12,7 @@ interface FeaturesGridProps {
 
 export function FeaturesGrid({ features }: FeaturesGridProps) {
   return (
-    <section id="features" className="w-full py-20 border-b border-surface-700/30">
+    <section id="features" className="w-full py-20 border-b border-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle title="Capabilities" subtitle="Core Expertise" />
 

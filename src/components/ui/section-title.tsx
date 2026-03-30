@@ -22,7 +22,7 @@ export function SectionTitle({ title, subtitle, align = "center" }: SectionTitle
       <p className="text-sm font-medium uppercase tracking-[0.2em] text-brand-400 mb-3">
         {title}
       </p>
-      <h2 className="text-3xl md:text-4xl font-bold text-surface-50">
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground">
         {subtitle}
       </h2>
       <div

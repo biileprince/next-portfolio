@@ -23,10 +23,10 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
         </div>
 
         <div className="flex-1 min-w-0">
-          <h4 className="text-base font-semibold text-surface-100 truncate">
+          <h4 className="text-base font-semibold text-foreground truncate">
             {testimonial.name}
           </h4>
-          <p className="text-sm text-surface-400 truncate">{testimonial.role}</p>
+          <p className="text-sm text-muted-foreground truncate">{testimonial.role}</p>
           <div className="flex gap-0.5 mt-1">
             {[...Array(5)].map((_, i) => (
               <RiStarFill key={i} className="text-sm text-brand-400" />
@@ -39,15 +39,15 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
         <span className="absolute -top-2 -left-1 text-4xl text-brand-400/10 font-serif leading-none">
           &ldquo;
         </span>
-        <p className="text-surface-400 text-sm leading-relaxed pl-4">
+        <p className="text-muted-foreground text-sm leading-relaxed pl-4">
           {testimonial.quote}
         </p>
       </div>
 
-      <div className="mt-5 pt-4 border-t border-surface-700/30 flex items-center gap-2 text-sm">
-        <span className="font-medium text-surface-300">{testimonial.projectTitle}</span>
-        <span className="text-surface-500">•</span>
-        <span className="text-surface-400">{testimonial.projectPlatform}</span>
+      <div className="mt-5 pt-4 border-t border-border flex items-center gap-2 text-sm">
+        <span className="font-medium text-foreground">{testimonial.projectTitle}</span>
+        <span className="text-muted-foreground">•</span>
+        <span className="text-muted-foreground">{testimonial.projectPlatform}</span>
       </div>
     </div>
   );

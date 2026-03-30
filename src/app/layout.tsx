@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Geist } from "next/font/google";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { LayoutShell } from "@/components/layout/layout-shell";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -65,19 +64,18 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn("h-full", inter.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
     >
-      <body className="min-h-full flex flex-col noise-bg antialiased">
+      <body suppressHydrationWarning className="min-h-full flex flex-col noise-bg antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <LayoutShell>{children}</LayoutShell>
           <Toaster />
         </ThemeProvider>
       </body>
     </html>
   );
 }
+

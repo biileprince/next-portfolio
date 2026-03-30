@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { deleteProject } from "../actions";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -14,19 +13,24 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import type { Project } from "@/types";
 
 interface DeleteDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  project?: any | null; // Drizzle Project type
+  project?: Project | null;
 }
 
-export function DeleteDialog({ open, onOpenChange, project }: DeleteDialogProps) {
+export function DeleteDialog({
+  open,
+  onOpenChange,
+  project,
+}: DeleteDialogProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
     if (!project) return;
-    
+
     startTransition(async () => {
       const res = await deleteProject(project.id);
       if (res.success) {
@@ -42,15 +46,25 @@ export function DeleteDialog({ open, onOpenChange, project }: DeleteDialogProps)
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="bg-surface-900 border-surface-700 text-surface-200">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-white">Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle className="text-white">
+            Are you absolutely sure?
+          </AlertDialogTitle>
           <AlertDialogDescription className="text-surface-400">
-            This action cannot be undone. This will permanently delete the project
-            <strong className="text-white mx-1">"{project?.title}"</strong> 
+            This action cannot be undone. This will permanently delete the
+            project
+            <strong className="text-white mx-1">
+              &quot;{project?.title}&quot;
+            </strong>
             and remove it from your portfolio database.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending} className="bg-surface-800 text-white border-surface-600 hover:bg-surface-700 hover:text-white">Cancel</AlertDialogCancel>
+          <AlertDialogCancel
+            disabled={isPending}
+            className="bg-surface-800 text-white border-surface-600 hover:bg-surface-700 hover:text-white"
+          >
+            Cancel
+          </AlertDialogCancel>
           <Button
             variant="destructive"
             onClick={handleDelete}

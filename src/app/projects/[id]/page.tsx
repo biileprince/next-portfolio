@@ -4,7 +4,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProjectById, getAllProjects } from "@/lib/queries/projects";
 import { BsGithub } from "react-icons/bs";
-import { FaGlobe, FaArrowLeft } from "react-icons/fa";
+import { FaGlobe, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FolderKanban } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 interface ProjectDetailPageProps {
   params: Promise<{ id: string }>;
@@ -37,9 +40,16 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   if (!project) notFound();
 
+  // Get all projects for prev/next navigation
+  const allProjects = await getAllProjects();
+  const currentIndex = allProjects.findIndex(p => p.id === project.id);
+  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
+
   const tags = project.tags as string[];
   const techStack = project.techStack as string[];
   const features = project.features as string[];
+  const hasImage = project.imageUrl && project.imageUrl.trim() !== "";
 
   return (
     <section className="w-full py-20">
@@ -47,7 +57,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         {/* Back */}
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 text-surface-400 hover:text-white mb-8 transition-colors focus-ring rounded-lg px-2 py-1"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors focus-ring rounded-lg px-2 py-1"
         >
           <FaArrowLeft className="text-sm" />
           Back to Projects
@@ -55,13 +65,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">{project.title}</h1>
-          <p className="text-lg text-surface-400 leading-relaxed">{project.description}</p>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">{project.title}</h1>
+          <p className="text-lg text-muted-foreground leading-relaxed">{project.description}</p>
         </div>
 
         {/* Image */}
-        {project.imageUrl && (
-          <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-8 glass">
+        <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-8 glass">
+          {hasImage ? (
             <Image
               src={project.imageUrl}
               alt={project.title}
@@ -70,8 +80,12 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               sizes="(max-width: 768px) 100vw, 800px"
               priority
             />
-          </div>
-        )}
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-brand-500/10 via-surface-800 to-surface-900 flex items-center justify-center">
+              <FolderKanban size={64} className="text-surface-600" />
+            </div>
+          )}
+        </div>
 
         {/* Links */}
         <div className="flex flex-wrap gap-3 mb-10">
@@ -80,7 +94,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-lg text-surface-200 hover:text-white hover:border-brand-500/30 transition-all focus-ring"
+              className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-lg text-foreground hover:border-brand-500/30 transition-all focus-ring"
             >
               <BsGithub className="text-lg" />
               View Source
@@ -101,15 +115,16 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         {/* Tech Stack */}
         <div className="mb-10">
-          <h2 className="text-xl font-semibold text-surface-100 mb-4">Tech Stack</h2>
+          <h2 className="text-xl font-semibold mb-4">Tech Stack</h2>
           <div className="flex flex-wrap gap-2">
             {techStack.map((tech) => (
-              <span
+              <Badge
                 key={tech}
-                className="px-3 py-1.5 text-sm rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20"
+                variant="secondary"
+                className="bg-brand-500/10 text-brand-400 border-brand-500/20 px-3 py-1.5"
               >
                 {tech}
-              </span>
+              </Badge>
             ))}
           </div>
         </div>
@@ -117,15 +132,12 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         {/* Tags */}
         {tags.length > 0 && (
           <div className="mb-10">
-            <h2 className="text-xl font-semibold text-surface-100 mb-4">Categories</h2>
+            <h2 className="text-xl font-semibold mb-4">Categories</h2>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1.5 text-sm rounded-full glass text-surface-300"
-                >
+                <Badge key={tag} variant="outline" className="glass px-3 py-1.5">
                   #{tag}
-                </span>
+                </Badge>
               ))}
             </div>
           </div>
@@ -133,20 +145,44 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         {/* Features */}
         {features.length > 0 && (
-          <div>
-            <h2 className="text-xl font-semibold text-surface-100 mb-4">Key Features</h2>
+          <div className="mb-10">
+            <h2 className="text-xl font-semibold mb-4">Key Features</h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {features.map((feature, idx) => (
                 <li key={idx} className="flex items-start gap-3 p-3 glass rounded-lg">
                   <span className="w-6 h-6 rounded-full bg-brand-500/10 flex items-center justify-center text-xs text-brand-400 font-semibold shrink-0 mt-0.5">
                     {idx + 1}
                   </span>
-                  <span className="text-sm text-surface-300">{feature}</span>
+                  <span className="text-sm text-muted-foreground">{feature}</span>
                 </li>
               ))}
             </ul>
           </div>
         )}
+
+        {/* Prev / Next Navigation */}
+        <Separator className="my-10" />
+        <div className="flex justify-between items-center">
+          {prevProject ? (
+            <Link href={`/projects/${prevProject.id}`} className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+              <FaArrowLeft className="text-sm group-hover:-translate-x-1 transition-transform" />
+              <div className="text-right">
+                <p className="text-xs text-muted-foreground uppercase tracking-wider">Previous</p>
+                <p className="text-sm font-medium">{prevProject.title}</p>
+              </div>
+            </Link>
+          ) : <div />}
+
+          {nextProject ? (
+            <Link href={`/projects/${nextProject.id}`} className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors text-right">
+              <div>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider">Next</p>
+                <p className="text-sm font-medium">{nextProject.title}</p>
+              </div>
+              <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform" />
+            </Link>
+          ) : <div />}
+        </div>
       </div>
     </section>
   );

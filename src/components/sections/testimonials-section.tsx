@@ -14,7 +14,7 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
   if (testimonials.length === 0) return null;
 
   return (
-    <section id="testimonials" className="w-full py-20 border-b border-surface-700/30">
+    <section id="testimonials" className="w-full py-20 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle title="Client Testimonials" subtitle="What People Say" />
 

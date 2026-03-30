@@ -28,7 +28,7 @@ export function ExpertiseClient({ data }: ExpertiseClientProps) {
         <SectionTitle title={data.title} subtitle={data.subtitle} />
 
         {data.description && (
-          <p className="text-center text-surface-400 max-w-2xl mx-auto mb-12 -mt-6">
+          <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12 -mt-6">
             {data.description}
           </p>
         )}
@@ -52,12 +52,12 @@ export function ExpertiseClient({ data }: ExpertiseClientProps) {
                 <div className="w-12 h-12 rounded-lg bg-brand-500/10 flex items-center justify-center mb-4">
                   <Icon className="text-2xl text-brand-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-surface-100 mb-2">{item.title}</h3>
-                <p className="text-surface-400 text-sm leading-relaxed mb-5 flex-1">
+                <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">
                   {item.description}
                 </p>
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-surface-700/30">
-                  {item.technologies.map((tech) => {
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-border">
+                  {item.technologies?.map((tech) => {
                     const TechIcon = getIcon(tech.iconName);
                     return (
                       <span

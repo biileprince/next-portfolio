@@ -1,0 +1,36 @@
+import { NextResponse } from "next/server";
+import { uploadImage } from "@/lib/cloudinary";
+
+const allowedTypes = ["application/pdf"];
+const maxSize = 10 * 1024 * 1024;
+
+export async function POST(request: Request) {
+  try {
+    const formData = await request.formData();
+    const file = formData.get("file") as File | null;
+
+    if (!file) {
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
+    }
+
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json(
+        { error: "Invalid file type. Allowed: PDF" },
+        { status: 400 },
+      );
+    }
+
+    if (file.size > maxSize) {
+      return NextResponse.json(
+        { error: "File too large. Maximum size is 10MB" },
+        { status: 400 },
+      );
+    }
+
+    const url = await uploadImage(file);
+    return NextResponse.json({ url });
+  } catch (error) {
+    console.error("POST /api/upload-document error:", error);
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+  }
+}

@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: "Education, experience, skills, and certifications of Prince Yennuyar Biile.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function ResumePage() {
   const [education, experience, achievements, skills] = await Promise.all([
     getEducation(),

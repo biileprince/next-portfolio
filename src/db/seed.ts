@@ -35,8 +35,8 @@ async function seed() {
     email: "biileprinceyennuyar5@gmail.com",
     phone: "0555902675",
     avatarUrl: "/images/princeimg.jpg",
-    cvUrl: "/PrinceBiile_CV.pdf", // Assume this is uploaded/updated manually
-    heroImageUrl: "/images/biileprince.jpg",
+    cvUrl: "/PrinceBiile_CV.pdf",
+    heroImageUrl: "/images/biileprince.png",
     socialLinks: JSON.stringify([
       {
         platform: "GitHub",
@@ -455,7 +455,7 @@ async function seed() {
       subtitle: "University of Cape Coast",
       period: "Oct 2022 - Sep 2026 (Expected)",
       details: JSON.stringify([
-        "Academic Standing: First Class Honors Trajectory (CGPA: 3.78+)",
+        "Academic Standing: First Class Honors Trajectory (CGPA: 3.8121560)",
         "Key Coursework: Data Structures & Algorithms, Software Engineering, Mobile & Distributed Computing, Network Computing",
         "UNIX Programming, Database Management, Object-Oriented Programming",
       ]),
@@ -537,9 +537,10 @@ async function seed() {
   // ─── Achievements / Certifications ───────────────────────────────────────
   await db.insert(achievements).values([
     {
-      year: "Mar 2026",
-      title: "Kubernetes and Cloud Native Essentials (LFS250)",
-      description: "The Linux Foundation",
+      year: "Apr 2026",
+      title: "Kubernetes and Cloud Native Associate (KCNA)",
+      description:
+        "Cloud Native Computing Foundation (CNCF) & The Linux Foundation",
       iconName: "FaDocker",
       sortOrder: 1,
     },

@@ -109,7 +109,10 @@ export default function ProjectGallery({
             Close
           </button>
 
-          <div className="relative w-full h-full" onClick={(event) => event.stopPropagation()}>
+          <div
+            className="relative w-full h-full"
+            onClick={(event) => event.stopPropagation()}
+          >
             <Image
               src={selectedImage.src}
               alt={selectedImage.alt}

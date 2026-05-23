@@ -4,7 +4,10 @@ import { projects } from "@/db/schema";
 import { eq, asc } from "drizzle-orm";
 
 export const getAllProjects = cache(async () => {
-  const rows = await db.select().from(projects).orderBy(asc(projects.sortOrder));
+  const rows = await db
+    .select()
+    .from(projects)
+    .orderBy(asc(projects.sortOrder));
   return rows.map(parseProject);
 });
 
@@ -18,7 +21,11 @@ export const getFeaturedProjects = cache(async () => {
 });
 
 export const getProjectById = cache(async (id: number) => {
-  const rows = await db.select().from(projects).where(eq(projects.id, id)).limit(1);
+  const rows = await db
+    .select()
+    .from(projects)
+    .where(eq(projects.id, id))
+    .limit(1);
   if (!rows[0]) return null;
   return parseProject(rows[0]);
 });
@@ -32,7 +39,9 @@ function toStringArray(value: unknown): string[] {
     try {
       const parsed = JSON.parse(value) as unknown;
       if (Array.isArray(parsed)) {
-        return parsed.filter((item): item is string => typeof item === "string");
+        return parsed.filter(
+          (item): item is string => typeof item === "string",
+        );
       }
     } catch {
       return [];

@@ -36,7 +36,7 @@ async function seed() {
     phone: "0555902675",
     avatarUrl: "/images/princeimg.jpg",
     cvUrl: "/PrinceBiile_CV.pdf",
-    heroImageUrl: "/images/biileprince.png",
+    heroImageUrl: "/images/PrinceBiile.jpg",
     socialLinks: JSON.stringify([
       {
         platform: "GitHub",

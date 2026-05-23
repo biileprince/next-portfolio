@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { getEducation, getExperience, getAchievements } from "@/lib/queries/resume";
+import {
+  getEducation,
+  getExperience,
+  getAchievements,
+} from "@/lib/queries/resume";
 import { getSkillsByCategory } from "@/lib/queries/skills";
 import { ResumeSection } from "@/components/sections/resume-section";
 
 export const metadata: Metadata = {
   title: "Resume",
-  description: "Education, experience, skills, and certifications of Prince Yennuyar Biile.",
+  description:
+    "Education, experience, skills, and certifications of Prince Yennuyar Biile.",
 };
 
 export const dynamic = "force-dynamic";

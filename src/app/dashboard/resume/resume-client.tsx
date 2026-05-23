@@ -14,7 +14,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import type { Achievement, Education, Experience, Profile, Skill } from "@/types";
+import type {
+  Achievement,
+  Education,
+  Experience,
+  Profile,
+  Skill,
+} from "@/types";
 import { ImageUpload } from "@/app/dashboard/projects/components/image-upload";
 import { DocumentUpload } from "./document-upload";
 import {
@@ -258,7 +264,8 @@ export function ResumeClient({
               key={skill.id}
               className="px-3 py-1.5 rounded-full bg-surface-800 border border-surface-700/50 text-sm text-surface-200"
             >
-              {skill.name} <span className="opacity-50 ml-1">({skill.category})</span>
+              {skill.name}{" "}
+              <span className="opacity-50 ml-1">({skill.category})</span>
             </span>
           ))}
         </div>
@@ -291,7 +298,12 @@ export function ResumeClient({
             </div>
             <div className="space-y-2">
               <Label htmlFor="exp-period">Period *</Label>
-              <Input id="exp-period" name="period" placeholder="Jan 2026 - Present" required />
+              <Input
+                id="exp-period"
+                name="period"
+                placeholder="Jan 2026 - Present"
+                required
+              />
               {expState.errors?.period && (
                 <p className="text-xs text-error">{expState.errors.period}</p>
               )}
@@ -345,7 +357,12 @@ export function ResumeClient({
             </div>
             <div className="space-y-2">
               <Label htmlFor="edu-period">Period *</Label>
-              <Input id="edu-period" name="period" placeholder="2022 - 2026" required />
+              <Input
+                id="edu-period"
+                name="period"
+                placeholder="2022 - 2026"
+                required
+              />
               {eduState.errors?.period && (
                 <p className="text-xs text-error">{eduState.errors.period}</p>
               )}
@@ -356,7 +373,11 @@ export function ResumeClient({
             </div>
             <div className="space-y-2">
               <Label htmlFor="edu-icon">Icon name (optional)</Label>
-              <Input id="edu-icon" name="iconName" placeholder="FaGraduationCap" />
+              <Input
+                id="edu-icon"
+                name="iconName"
+                placeholder="FaGraduationCap"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="edu-details">Details (one per line)</Label>
@@ -394,12 +415,19 @@ export function ResumeClient({
               <Label htmlFor="ach-description">Issuer / Description *</Label>
               <Input id="ach-description" name="description" required />
               {achState.errors?.description && (
-                <p className="text-xs text-error">{achState.errors.description}</p>
+                <p className="text-xs text-error">
+                  {achState.errors.description}
+                </p>
               )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="ach-year">Year *</Label>
-              <Input id="ach-year" name="year" placeholder="Apr 2026" required />
+              <Input
+                id="ach-year"
+                name="year"
+                placeholder="Apr 2026"
+                required
+              />
               {achState.errors?.year && (
                 <p className="text-xs text-error">{achState.errors.year}</p>
               )}

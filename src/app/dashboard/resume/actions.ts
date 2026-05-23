@@ -19,7 +19,9 @@ function toLines(value: FormDataEntryValue | null): string[] {
     .filter(Boolean);
 }
 
-function toOptionalNumber(value: FormDataEntryValue | null): number | undefined {
+function toOptionalNumber(
+  value: FormDataEntryValue | null,
+): number | undefined {
   if (!value || typeof value !== "string") return undefined;
   const parsed = Number.parseInt(value, 10);
   return Number.isFinite(parsed) ? parsed : undefined;
@@ -51,11 +53,13 @@ export async function addExperience(
 
   const sortOrder =
     toOptionalNumber(formData.get("sortOrder")) ??
-    ((await db
-      .select()
-      .from(experience)
-      .orderBy(desc(experience.sortOrder))
-      .limit(1))[0]?.sortOrder ?? 0) + 1;
+    ((
+      await db
+        .select()
+        .from(experience)
+        .orderBy(desc(experience.sortOrder))
+        .limit(1)
+    )[0]?.sortOrder ?? 0) + 1;
 
   await db.insert(experience).values({
     title: formData.get("title") as string,
@@ -92,11 +96,13 @@ export async function addEducation(
 
   const sortOrder =
     toOptionalNumber(formData.get("sortOrder")) ??
-    ((await db
-      .select()
-      .from(education)
-      .orderBy(desc(education.sortOrder))
-      .limit(1))[0]?.sortOrder ?? 0) + 1;
+    ((
+      await db
+        .select()
+        .from(education)
+        .orderBy(desc(education.sortOrder))
+        .limit(1)
+    )[0]?.sortOrder ?? 0) + 1;
 
   await db.insert(education).values({
     title: formData.get("title") as string,
@@ -121,7 +127,10 @@ export async function addAchievement(
   const errors: Record<string, string[]> = {};
   const titleError = requiredField(formData.get("title"), "Title");
   const yearError = requiredField(formData.get("year"), "Year");
-  const descriptionError = requiredField(formData.get("description"), "Description");
+  const descriptionError = requiredField(
+    formData.get("description"),
+    "Description",
+  );
 
   if (titleError) errors.title = [titleError];
   if (yearError) errors.year = [yearError];
@@ -133,11 +142,13 @@ export async function addAchievement(
 
   const sortOrder =
     toOptionalNumber(formData.get("sortOrder")) ??
-    ((await db
-      .select()
-      .from(achievements)
-      .orderBy(desc(achievements.sortOrder))
-      .limit(1))[0]?.sortOrder ?? 0) + 1;
+    ((
+      await db
+        .select()
+        .from(achievements)
+        .orderBy(desc(achievements.sortOrder))
+        .limit(1)
+    )[0]?.sortOrder ?? 0) + 1;
 
   await db.insert(achievements).values({
     year: formData.get("year") as string,
